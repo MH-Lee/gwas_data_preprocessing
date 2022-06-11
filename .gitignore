@@ -1,0 +1,8 @@
+.ipynb_checkpoints/
+lookup_table/
+plink_kchip/
+__pycache__/
+prune/
+csv_file/
+t2dm_id.txt
+*.out
