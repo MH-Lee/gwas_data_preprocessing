@@ -24,6 +24,7 @@ def make_lookup_df(path):
 
 def main(args):
     os.makedirs('./plink_kchip/binary', exist_ok=True)
+    os.makedirs('./prune', exist_ok=True)
     os.makedirs(args.raw_dir, exist_ok=True)
     os.makedirs(args.output_dir, exist_ok=True)
     
