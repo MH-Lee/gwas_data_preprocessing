@@ -1,6 +1,7 @@
-SET=$(seq 1 22)
-for i in $SET
+vcf_dir=$1
+search_dir=`ls $vcf_dir/*.vcf`
+for vcf_file in $search_dir
 do
-    echo "CHR"${i} "start"
-    bgzip -c ../original_vcf/CHR${i}_annoINFO_filINF0.8_Open_72K_190924_1.vcf > ../original_vcf/CHR${i}_annoINFO_filINF0.8_Open_72K_190924_1.vcf.gz
+    filename="$(basename -s .vcf $vcf_file)"
+    bgzip -c ${vcf_dir}/${filename}.vcf > ${vcf_dir}/${filename}.vcf.gz
 done

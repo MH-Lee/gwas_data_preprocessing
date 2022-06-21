@@ -5,6 +5,7 @@ import shlex
 import pandas as pd
 from tqdm import tqdm
 from glob import glob
+from time import time
 
 def make_lookup_df(path):
     with open(path) as f:
@@ -26,6 +27,7 @@ def main(args):
     os.makedirs(args.raw_dir, exist_ok=True)
     os.makedirs(args.output_dir, exist_ok=True)
     
+    start_time = time()
     if args.bgzip_process:
         subprocess.call(shlex.split('sh ./bgzip_vcf.sh'))
     if args.tabix_precess:
@@ -52,6 +54,8 @@ def main(args):
             labeled_df.to_csv(save_path + save_fn, index=False)
     else:
         print("Completed!")
+    end_time = time()
+    print("Completed! : ", end_time - start_time)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Select GWAS GC arguments')
