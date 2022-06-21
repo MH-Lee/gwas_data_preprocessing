@@ -43,7 +43,10 @@ def main(args):
         path_list = glob(args.raw_dir + '*.raw')
         save_path = args.output_dir
         label_csv = pd.read_csv('./sample_id/sample_cohort_{data_type}.csv'.format(data_type=args.data_type))
-        label_csv = label_csv[['DIST_ID', 'DM_YN', 'SEX', 'AGE']].rename(columns={'DIST_ID':'sample'})
+        if args.data_type == 'kchip':
+            label_csv = label_csv[['DIST_ID', 'DM_YN', 'SEX', 'AGE']].rename(columns={'DIST_ID':'sample'})
+        else:
+            label_csv = label_csv[['DIST_ID', 'DM_YN', 'Sex', 'Age']].rename(columns={'DIST_ID':'sample'})
         label_csv['SEX'] = label_csv['SEX'] - 1
         for idx, path in enumerate(path_list):
             print(path)
