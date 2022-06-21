@@ -31,14 +31,14 @@ def main(args):
     if args.tabix_precess:
         subprocess.call(shlex.split('sh ./tabix_vcf.sh'))
     if len(os.listdir('./plink_kchip/binary/')) == 0:
-        subprocess.call(shlex.split('sh ./convert_plink.sh {geno} {maf} {hwe}'.format(geno=args.geno, maf=args.maf, hwe=args.hwe)))
+        subprocess.call(shlex.split('sh ./convert_plink.sh {vcf_dir} {geno} {maf} {hwe}'.format(vcf_dir=args.vcf_path, geno=args.geno, maf=args.maf, hwe=args.hwe)))
     if  len(os.listdir('./lookup_table')) == 0:
         subprocess.call(shlex.split('sh ./make_lookup_table.sh {ld_windows} {ld_step} {ld_r2}'.format(ld_windows=args.ld_windows, ld_step=args.ld_step, ld_r2=args.ld_r2)))
     
     ### convert lookup table to 
     print("make snp csv file")
     if len(os.listdir(args.output_dir)) == 0:
-        path_list = glob(args.raw_dir + '/*.raw')
+        path_list = glob(args.raw_dir + '*.raw')
         save_path = args.output_dir
         label_csv = pd.read_csv('../t2dm_cohort.csv')
         label_csv = label_csv[['DIST_ID', 'DM_YN', 'SEX', 'AGE']].rename(columns={'DIST_ID':'sample'})
@@ -57,6 +57,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Select GWAS GC arguments')
     parser.add_argument('--bgzip_process', action='store_true', help='compress process vcf file')
     parser.add_argument('--tabix_precess', action='store_true', help='make vcf.gz index file')
+    parser.add_argument('--vcf_path', default='../original_vcf', help='vcf.gz directory path')
     parser.add_argument('--geno', default=0.01, type=float, help='delete snp if missing value proportion greater than 0.01')
     parser.add_argument('--maf', default=0.05, type=float, help='minor allele frequency threshold')
     parser.add_argument('--hwe', default=0.001, type=float, help='hardy weinberg equation threshold (0.001 ~ 5.7*10^-7)')
