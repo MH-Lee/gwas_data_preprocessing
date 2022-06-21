@@ -11,10 +11,10 @@ echo "plink algorithms $missing_threshold $maf $hwe"
 
 for vcf_file in $search_dir
 do
-    file_name="$(basename -s .vcf.gz $vcf_file)"
-    echo "$file_name"
+    filename="$(basename -s .vcf.gz $vcf_file)"
+    echo "$filename"
     chrname=$(echo "${filename}" | grep -o -E '[chrCHR0-9]+' | head -1)
     echo ${chrname} "start"
-    /root/plink/plink --vcf ${file_name}.vcf.gz --keep ./sample_id/sample_id_${data_type}.txt --snps-only --geno $missing_threshold --maf $maf --hwe $hwe --out ./plink_kchip/${chrname}_${data_type}_snp --recode
-    /root/plink/plink --vcf ${file_name}.vcf.gz --keep ./sample_id/sample_id_${data_type}.txt --snps-only --geno $missing_threshold --maf $msf --hwe $hwe --out ./plink_kchip/binary/${chrname}_${data_type}_snp --make-bed
+    /root/plink/plink --vcf ${filename}.vcf.gz --keep ./sample_id/sample_id_${data_type}.txt --snps-only --geno $missing_threshold --maf $maf --hwe $hwe --out ./plink_kchip/${chrname}_${data_type}_snp --recode
+    /root/plink/plink --vcf ${filename}.vcf.gz --keep ./sample_id/sample_id_${data_type}.txt --snps-only --geno $missing_threshold --maf $msf --hwe $hwe --out ./plink_kchip/binary/${chrname}_${data_type}_snp --make-bed
 done
