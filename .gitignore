@@ -4,5 +4,6 @@ plink_kchip/
 __pycache__/
 prune/
 csv_file/
-t2dm_id.txt
+sample_id.txt
 *.out
+sample_id/

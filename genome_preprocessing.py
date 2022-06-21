@@ -33,16 +33,16 @@ def main(args):
     if args.tabix_precess:
         subprocess.call(shlex.split('sh ./tabix_vcf.sh'))
     if len(os.listdir('./plink_kchip/binary/')) == 0:
-        subprocess.call(shlex.split('sh ./convert_plink.sh {vcf_dir} {geno} {maf} {hwe}'.format(vcf_dir=args.vcf_path, geno=args.geno, maf=args.maf, hwe=args.hwe)))
+        subprocess.call(shlex.split('sh ./convert_plink.sh {vcf_dir} {geno} {maf} {hwe} {data_type}'.format(vcf_dir=args.vcf_path, geno=args.geno, maf=args.maf, hwe=args.hwe, data_type=args.data_type)))
     if  len(os.listdir('./lookup_table')) == 0:
-        subprocess.call(shlex.split('sh ./make_lookup_table.sh {ld_windows} {ld_step} {ld_r2}'.format(ld_windows=args.ld_windows, ld_step=args.ld_step, ld_r2=args.ld_r2)))
+        subprocess.call(shlex.split('sh ./make_lookup_table.sh {ld_windows} {ld_step} {ld_r2} {data_type}'.format(ld_windows=args.ld_windows, ld_step=args.ld_step, ld_r2=args.ld_r2, data_type=args.data_type)))
     
     ### convert lookup table to 
     print("make snp csv file")
     if len(os.listdir(args.output_dir)) == 0:
         path_list = glob(args.raw_dir + '*.raw')
         save_path = args.output_dir
-        label_csv = pd.read_csv('../t2dm_cohort.csv')
+        label_csv = pd.read_csv('../sample_cohort_{data_type}.csv'.format(args.data_type))
         label_csv = label_csv[['DIST_ID', 'DM_YN', 'SEX', 'AGE']].rename(columns={'DIST_ID':'sample'})
         label_csv['SEX'] = label_csv['SEX'] - 1
         for idx, path in enumerate(path_list):
@@ -70,5 +70,6 @@ if __name__ == '__main__':
     parser.add_argument('--ld_r2', default=0.5, type=float, help='LD snp r2 value threshold')
     parser.add_argument('--raw_dir', default='./lookup_table/', type=str, help='lookup data raw data directory')
     parser.add_argument('--output_dir', default='./csv_file/', type=str, help='LD snp r2 value threshold')
+    parser.add_argument('--data_type', default='1k', type=str, help='(1) 1k (2) kchip')
     args = parser.parse_args()
     main(args)
