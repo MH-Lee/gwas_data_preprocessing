@@ -45,9 +45,10 @@ def main(args):
         label_csv = pd.read_csv('./sample_id/sample_cohort_{data_type}.csv'.format(data_type=args.data_type))
         if args.data_type == 'kchip':
             label_csv = label_csv[['DIST_ID', 'DM_YN', 'SEX', 'AGE']].rename(columns={'DIST_ID':'sample'})
+            label_csv['SEX'] = label_csv['SEX'] - 1
         else:
             label_csv = label_csv[['DIST_ID', 'DM_YN', 'Sex', 'Age']].rename(columns={'DIST_ID':'sample'})
-        label_csv['SEX'] = label_csv['SEX'] - 1
+            label_csv['Sex'] = label_csv['Sex'].map({'M':0, 'F':1}) 
         for idx, path in enumerate(path_list):
             print(path)
             snp_df = make_lookup_df(path)
