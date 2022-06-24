@@ -30,15 +30,13 @@ def main(args):
     
     start_time = time()
     if args.bgzip_process:
-        subprocess.call(shlex.split('sh ./bgzip_vcf.sh'))
+        subprocess.call(shlex.split('sh ./shell_script/bgzip_vcf.sh'))
     if args.tabix_precess:
-        subprocess.call(shlex.split('sh ./tabix_vcf.sh'))
+        subprocess.call(shlex.split('sh ./shell_script/tabix_vcf.sh'))
     if len(os.listdir(os.path.join(args.plink_path, 'binary'))) == 0:
-        subprocess.call(shlex.split(f'sh ./convert_plink.sh {args.vcf_dir} {args.geno} {args.maf} {args.hwe} {args.data_type} {args.plink_path}'))
-        # .format(vcf_dir=args.vcf_path, geno=args.geno, maf=args.maf, hwe=args.hwe, data_type=args.data_type, plink_path=args.plink_path)
+        subprocess.call(shlex.split(f'sh ./shell_script/convert_plink.sh {args.vcf_dir} {args.geno} {args.maf} {args.hwe} {args.data_type} {args.plink_path}'))
     if  len(os.listdir(args.raw_path)) == 0:
         subprocess.call(shlex.split(f'sh ./make_lookup_table.sh {args.ld_windows} {args.ld_step} {args.ld_r2} {args.data_type} {args.plink_path} {args.raw_path}'))
-        #.format(ld_windows=args.ld_windows, ld_step=args.ld_step, ld_r2=args.ld_r2, data_type=args.data_type, raw_path=args.raw_path)))
     
     ### convert lookup table to 
     print(len(os.listdir(args.output_path)))
