@@ -7,3 +7,5 @@ csv_file/
 sample_id.txt
 *.out
 sample_id/
+kchip/
+korean_1k/
