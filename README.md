@@ -26,7 +26,7 @@ sudo apt-get install bcftools
 ```{python}
 python genome_preprocessing.py --vcf_path [str] --geno [float:defalut=0.01] --maf [float:defalut=0.05] --hwe [float:defalut=0.001] \
                                --ld_windows [int:defalut=50] --ld_windows [inf:defalut=5] --ld_r2 [float:defalut=0.5] \
-                               --raw_dir [str] --output_dir [str] --data_type [str : 1k or kchip] \
+                               --raw_dir [str] --data_type [str : 1k] \
                                --bgzip_process [store_true (optional)] --tabix_precess [store_true (optional)]
 ```
 

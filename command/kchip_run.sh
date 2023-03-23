@@ -1,0 +1,2 @@
+python genome_preprocessing.py --vcf_path ../data/filtered_vcf  --plink_path ./kchip/plink_kchip \
+                               --raw_path ./kchip/lookup_table --output_path ./kchip/csv_file --data_type kchip
